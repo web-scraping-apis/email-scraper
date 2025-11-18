@@ -1,0 +1,47 @@
+{
+  "name": "email-scraper",
+  "version": "1.0.0",
+  "description": "A TypeScript library and CLI tool for scraping emails from webpages and entire websites",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "email-scraper": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "scrape": "node dist/cli.js",
+    "dev": "ts-node src/cli.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "email",
+    "scraper",
+    "crawler",
+    "web-scraping",
+    "playwright",
+    "puppeteer"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "tlds": "^1.241.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "playwright": "^1.56.1",
+    "puppeteer": "^21.5.0"
+  },
+  "peerDependenciesMeta": {
+    "playwright": {
+      "optional": true
+    },
+    "puppeteer": {
+      "optional": true
+    }
+  }
+}
