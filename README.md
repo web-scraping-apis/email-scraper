@@ -4,8 +4,20 @@ A TypeScript library and CLI tool for scraping email addresses from webpages and
 
 ## Installation
 
+1. Clone this repository:
 ```bash
-npm install email-scraper
+git clone https://github.com/web-scraping-apis/email-scraper
+cd email-scraper
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Build the project:
+```bash
+npm run build
 ```
 
 For browser support, also install one of:
@@ -15,16 +27,24 @@ npm install playwright
 npm install puppeteer
 ```
 
+If using Playwright, install the browser binaries:
+```bash
+npx playwright install chromium
+```
+
 ## CLI Usage
 
 ### Scrape emails from a single webpage
 
 ```bash
 # Using HTTP requests (default)
-npx email-scraper page https://example.com/contact
+npm run dev page https://example.com/contact
 
 # Using headless browser
-npx email-scraper page https://example.com/contact --browser
+npm run dev page https://example.com/contact --browser
+
+# After building, you can also use:
+npm run scrape page https://example.com/contact
 ```
 
 Options:
@@ -36,10 +56,13 @@ Options:
 
 ```bash
 # Using HTTP requests (default)
-npx email-scraper website https://example.com
+npm run dev website https://example.com
 
 # Using headless browser
-npx email-scraper website https://example.com --browser
+npm run dev website https://example.com --browser
+
+# After building, you can also use:
+npm run scrape website https://example.com
 ```
 
 Options:
@@ -51,10 +74,12 @@ Options:
 
 ## Library Usage
 
+You can also import and use the scraper functions in your own TypeScript/JavaScript projects:
+
 ### Basic HTTP Scraping
 
 ```typescript
-import { scrapeEmailsFromUrl } from 'email-scraper';
+import { scrapeEmailsFromUrl } from './src/index';
 
 const emails = await scrapeEmailsFromUrl('https://example.com/contact');
 console.log(Array.from(emails));
@@ -64,7 +89,7 @@ console.log(Array.from(emails));
 
 ```typescript
 import { chromium } from 'playwright';
-import { scrapeEmailsFromPage } from 'email-scraper';
+import { scrapeEmailsFromPage } from './src/index';
 
 const browser = await chromium.launch();
 const page = await browser.newPage();
@@ -76,7 +101,7 @@ await browser.close();
 
 ```typescript
 import puppeteer from 'puppeteer';
-import { scrapeEmailsFromPage } from 'email-scraper';
+import { scrapeEmailsFromPage } from './src/index';
 
 const browser = await puppeteer.launch();
 const page = await browser.newPage();
@@ -87,7 +112,7 @@ await browser.close();
 ### Crawling an Entire Website
 
 ```typescript
-import { scrapeEmailsFromWebsite } from 'email-scraper';
+import { scrapeEmailsFromWebsite } from './src/index';
 
 const emails = await scrapeEmailsFromWebsite('https://example.com', {
   maxDepth: 3,
@@ -101,7 +126,7 @@ const emails = await scrapeEmailsFromWebsite('https://example.com', {
 ### Using the EmailScraper Class
 
 ```typescript
-import { EmailScraper } from 'email-scraper';
+import { EmailScraper } from './src/index';
 import { chromium } from 'playwright';
 
 // With browser
@@ -114,6 +139,8 @@ await browser.close();
 const scraper = new EmailScraper();
 const emails = await scraper.scrapeFromUrl('https://example.com/contact');
 ```
+
+**Note:** After building (`npm run build`), you can import from `./dist/index` instead of `./src/index`.
 
 ## API Reference
 
@@ -135,11 +162,16 @@ const emails = await scraper.scrapeFromUrl('https://example.com/contact');
 # Install dependencies
 npm install
 
-# Build
+# Build TypeScript to JavaScript
 npm run build
 
-# Run CLI in development
+# Run CLI in development mode (uses ts-node, no build needed)
 npm run dev page https://example.com
+npm run dev website https://example.com
+
+# Run CLI after building (uses compiled JavaScript)
+npm run scrape page https://example.com
+npm run scrape website https://example.com
 ```
 
 ## License
